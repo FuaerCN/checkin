@@ -24,11 +24,11 @@
 ## 本地或者服务器运行
 * 安装python3
 * 运行python -V查看python版本，如果不是3版本，尝试运行python3 -V
-* git clone https://github.com/fakedon/checkin
+* `git clone https://github.com/fakedon/checkin`
 * 上面是python就运行pip，是python3就运行pip3
-* pip3 install -r requirements.txt
+* `pip3 install -r requirements.txt`
 * 上面是python就运行python，是python3就运行python3
-* python3 run.py
+* `python3 run.py`
 
 **添加账号方式有三种：**
 * 运行python run.py时指定-c参数  
@@ -44,7 +44,7 @@
 
    username=username1 修改username1为当前用户名
 
-   password=password1 修改password1为当前用户名
+   password=password1 修改password1为当前密码
 
    http_proxy=http1 这里设置http代理，没有删除此行，代理格式：http://127.0.0.1:1080，socks5://127.0.0.1:1080
 
@@ -76,7 +76,7 @@
 accounts 字典中添加账号即可，规则如1
 
    以上3种方式可同时存在  
-* 之后运行python3 run.py -c hostloc/hostloc.cfg
+* 之后运行`python3 run.py -c hostloc/hostloc.cfg`
 
 ## 部署到travis
 * fork我的项目，下一步
@@ -96,11 +96,16 @@ Travis运行效果图：
 
 ## 部署到腾讯云无服务器云函数
 * 访问[https://console.cloud.tencent.com/scf/list](https://console.cloud.tencent.com/scf/list)
-* 新建函数服务
+* 新建函数服务，创建方式：空白函数，函数名称：任意，如hostloc，运行环境：Python3.6，下一步
    ![](/docs/img/hostloc_tencent1.jpg)
-* 下一步，修改执行方法为run.run.main_handler，本地上传文件夹，完成
-   ![](/docs/img/hostloc_tencent2.jpg)
-* 编辑函数配置，这里可以修改超时时间，添加环境变量
-   ![](/docs/img/hostloc_tencent3.jpg)
-* 添加触发方式，定时触发，每天，否，立即启用，保存
+* 执行方法：index.main_handler(不用改)，提交方式：在线编辑，复制[https://github.com/fakedon/checkin/blob/master/hostloc/hostloc.py](https://github.com/fakedon/checkin/blob/master/hostloc/hostloc.py)内代码到编辑框里，完成
+   ![](/docs/img/hostloc_tencent12.jpg)
+* 由于腾讯云有一定的免费时间额度，这里我默认把每个账号完成后等待时间改为60秒，如果你要改的话，修改下图172行interval=60的数字60为你想要的等待时间，单位秒
+   ![](/docs/img/hostloc_tencent13.jpg)
+* 编辑函数配置，超时时间：300，添加环境变量，key填hostloc_username_1和hostloc_password_1，value填帐号和密码，有代理添加代理，Name填代理方式hostloc_http_1或hostloc_https_1，Value填上述提到的代理，多账号以此类推  
+   示例图为我添加的小号（Alita）  
+   ![](/docs/img/hostloc_tencent14.jpg)
+* 添加触发方式，触发方式：定时触发，触发周期：每天，填入参数：否，立即启用，保存
    ![](/docs/img/hostloc_tencent4.jpg)
+* 函数代码测试如下图
+   ![](/docs/img/hostloc_tencent15.jpg)
